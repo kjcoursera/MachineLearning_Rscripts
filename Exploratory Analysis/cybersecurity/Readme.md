@@ -2,6 +2,12 @@ Pew Research Center conducted a knowledge quiz about cyber security issues and c
 
 <img align="left" width="100" height="100" src="http://www.fillmurray.com/100/100">
 
+<img align="left" width="100" height="100" src=figure/Plot1.png>
+
+
+<img align="left" width="100" height="100" src=/figure/Plot1.png>
+
+
 ![Plot1](/figure/Plot1.png)
 ![Plot2](/figure/Plot2.png)
 ![Plot3](/figure/Plot3.png)
