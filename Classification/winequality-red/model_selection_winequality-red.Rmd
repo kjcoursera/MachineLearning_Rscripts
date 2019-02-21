@@ -1,0 +1,98 @@
+---
+title: "Model Selection"
+author: "Kanchana Jagannathan"
+date: "1/17/2019"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+```{r }
+library(caret)
+mydata <- read.csv('winequality-red.csv',sep=';')
+
+mydata$quality <- as.factor(mydata$quality)
+control <- trainControl(method = "repeatedcv",number = 10, repeats = 3)
+seed <- 123
+
+metric <- "Accuracy"
+
+```
+
+# Split the data into training and test set
+```{r}
+
+
+training.samples <- createDataPartition(mydata$quality, p = 0.8, list = FALSE)
+train.data  <- mydata[training.samples, ]
+test.data <- mydata[-training.samples, ]
+
+
+```
+
+#Model Building
+```{r}
+pre_process = c("center","scale")
+
+# Linear Discriminant Analysis
+set.seed(seed)
+fit.lda<-train(quality~., data=train.data,method="lda",metric=metric,
+               preProc=c("center","scale"),trControl=control)
+
+# SVM Radial
+set.seed(seed)
+fit.svmRadial<-train(quality~., data=train.data,method="svmRadial",metric=metric,
+               preProc=c("center","scale"),trControl=control,fit=FALSE)
+
+# knn
+set.seed(seed)
+fit.knn<-train(quality~., data=train.data,method="knn",metric=metric,
+               preProc=c("center","scale"),trControl=control)
+
+# CART
+set.seed(seed)
+fit.cart<-train(quality~., data=train.data,method="rpart",metric=metric,
+               trControl=control)
+
+# C5.0
+set.seed(seed)
+fit.c50<-train(quality~., data=train.data,method="C5.0",metric=metric,
+               trControl=control)
+
+# Bagged CART
+set.seed(seed)
+fit.treebag<-train(quality~., data=train.data,method="treebag",metric=metric,
+               trControl=control)
+# Random Forest
+set.seed(seed)
+fit.rf<-train(quality~., data=train.data,method="rf",metric=metric,
+               trControl=control)
+
+#Stochastic Gradient Boosting (Generalized Boosted Modeling)
+set.seed(seed)
+fit.gbm <- train(quality~., data=train.data, method="gbm", metric=metric, trControl=control, verbose=FALSE)
+
+```
+
+
+
+#results
+```{r}
+results <- resamples(list(lda=fit.lda, svm=fit.svmRadial, knn=fit.knn, 
+                          cart=fit.cart, c50=fit.c50,
+                          bagging=fit.treebag, rf=fit.rf, gbm=fit.gbm))
+# Table comparison
+print(summary(results))
+
+```
+
+```{r}
+# boxplot comparison
+bwplot(results)
+# Dot-plot comparison
+dotplot(results)
+```
