@@ -1,11 +1,5 @@
-Pew Research Center conducted a knowledge quiz about cyber security issues and concepts. An article is pulished under "What the public knows about cyber security" by Aaron Smith. My interest is explore the data in R and visualize the data in various groups.
+Pew Research Center conducted a knowledge quiz about cyber security issues and concepts. An article is pulished under "What the public knows about cyber security" by Aaron Smith. My interest is to explore the data in R and visualize the data in various groups.
 
-<img align="left" width="100" height="100" src="http://www.fillmurray.com/100/100">
-
-<img align="left" width="100" height="100" src=figure/Plot1.png>
-
-
-<img align="left" width="100" height="100" src=/figure/Plot1.png>
 
 
 ![Plot1](figure/Plot1.png)
